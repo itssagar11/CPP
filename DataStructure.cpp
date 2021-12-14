@@ -94,19 +94,75 @@ public:
         return Merge(left,right);
 
     }
-    // QuickSort
+    // QuickSort in linked list
     void QuickSort(Node **start,Node **last){
         if(*start==*last || *start==NULL || *start==(*last)->next){
             return;
         }
         Node* pivot= Partition(*start,*last);
-       // System.out.println("pivot is :-"+pivot.data);
         QuickSort(start,&pivot);
              if(pivot!=NULL && pivot==*start){ // pivot =start means pivot is first element
                  QuickSort(&(pivot->next),last);
              }
              else if(pivot->next!=NULL && pivot->next->next!=NULL)
                 QuickSort(&(pivot->next->next),last);
+    }
+
+    void bubbleSort(int A[])
+    {
+        int N=sizeof(A)/sizeof(A[0]);
+        for(int i=0;i<N-1;i++)
+        {
+            int f=0;
+            for(int j=0;j<N-1-i;j++)
+            {
+                if(A[j]>A[j+1])
+                {
+                    f=1;
+                    int t=A[j];
+                    A[j]=A[j+1];
+                    A[j+1]=t;
+                }
+            }
+        }
+    }
+    void insertionSort(int A[])
+    {
+        int N=sizeof(A)/sizeof(A[0]);
+        int i,j,t=0;
+        for (i= 1;i< N;i++)
+        {
+            t=A[i];
+            j=i-1;
+            while(j>=0&&t<A[j])
+            {
+                A[j + 1]=A[j];
+                j--;
+            }
+            A[j+1]=t;
+        }
+    }
+     void SelectionSort(int A[])
+    {   int N=sizeof(A)/sizeof(A[0]);
+        int i,j,pos,min=0;
+        for (i=0;i<N-1;i++)
+        {
+            min=A[i];
+            pos=i;
+            for(j=i+1;j<N;j++)
+            {
+                if(min>A[j])
+                {
+                    min=A[j];
+                    pos=j;
+                }
+            }
+            if (pos!=i)
+            {
+                A[pos]=A[i];
+                A[i]=min;
+            }
+        }
     }
 
 
