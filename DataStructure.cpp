@@ -41,8 +41,42 @@ class Collection{
             right->next=Merge(left,right->next);
             return right;
     }
+    // function to get last node
+   Node* last(Node* head){
+        Node* lastnode=head;
+            while(lastnode->next!=NULL){
+                lastnode=lastnode->next;
+            }
 
+        return lastnode;
+    }
+    // function to swap two node value.
+    void Swap(Node **curr,Node **start){
+        int temp=(*curr)->data;
+        (*curr)->data=(*start)->data;
+        (*start)->data=temp;
+    }
+    Node* Partition(Node *head,Node *last){
+        if(head==NULL || head==last || last==NULL){
+            return head;
+        }
 
+        int pivot=last->data;
+        Node* curr=head;
+        Node* start=head;
+        Node* prev=head;
+        while(start!=last){
+            if(start->data<pivot){
+                prev=curr;
+                Swap(&curr,&start);
+                curr=curr->next;
+            }
+            start=start->next;
+        }
+        Swap(&curr,&start);
+        return prev;
+
+    }
 };
 class Sorting:public Collection{
 public:
@@ -60,9 +94,25 @@ public:
         return Merge(left,right);
 
     }
+    // QuickSort
+    void QuickSort(Node **start,Node **last){
+        if(*start==*last || *start==NULL || *start==(*last)->next){
+            return;
+        }
+        Node* pivot= Partition(*start,*last);
+       // System.out.println("pivot is :-"+pivot.data);
+        QuickSort(start,&pivot);
+             if(pivot!=NULL && pivot==*start){ // pivot =start means pivot is first element
+                 QuickSort(&(pivot->next),last);
+             }
+             else if(pivot->next!=NULL && pivot->next->next!=NULL)
+                QuickSort(&(pivot->next->next),last);
+    }
+
+
 } ;
 // class LinkedList.
-class LinkedList{
+class LinkedList: public Sorting{
     protected:
 	Node* head;
 	public:
@@ -159,9 +209,13 @@ class LinkedList{
 			head=head->next;
 		}
 	}
+	private:
+	void Sort(){
+       head= mergeSort(head);
+	}
 
 };
-// Stack using Linkedlist (Dynamic stack);
+// Stack using Linked ist (Dynamic stack);
 // Stack class inherit linkedList class;
 class Stack: public LinkedList{
     public:
@@ -275,4 +329,3 @@ class CircularQueue: public Queue{
 
         }
 };
-
